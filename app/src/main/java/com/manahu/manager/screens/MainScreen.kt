@@ -89,6 +89,8 @@ fun MainScreen(navController: NavController) {
 
     var isBank by remember { mutableStateOf(false) }
     var isBirga by remember { mutableStateOf(false) }
+    var isHousing by remember { mutableStateOf(false) }
+    var isBusiness by remember { mutableStateOf(false) }
 
     var isMicrosoft by remember { mutableStateOf(false) }
     var isIBM by remember { mutableStateOf(false) }
@@ -194,12 +196,35 @@ fun MainScreen(navController: NavController) {
     var capitalofNordIce by remember { mutableStateOf(244977541) }
     var capitalofCocaCola by remember { mutableStateOf(176409872) }
 
-    var capital by remember { mutableStateOf(1000) }
-    var cash by remember { mutableStateOf(1000) }
+    var capital by remember { mutableStateOf(10000) }
+    var cash by remember { mutableStateOf(10000) }
     var housing by remember { mutableStateOf(0) }
     var profitinmonth by remember { mutableStateOf(0) }
     var lossinmonth by remember { mutableStateOf(0) }
     var employees by remember { mutableStateOf(0) }
+
+    var isDoctor by remember { mutableStateOf(false) }
+    var isLawer by remember { mutableStateOf(false) }
+    var isSecurity by remember { mutableStateOf(false) }
+
+    var isMoto by remember { mutableStateOf(false) }
+    var isAuto by remember { mutableStateOf(false) }
+    var isApartment by remember { mutableStateOf(false) }
+    var isWilla by remember { mutableStateOf(false) }
+    var isFly by remember { mutableStateOf(false) }
+    var isCastle by remember { mutableStateOf(false) }
+    var isIsland by remember { mutableStateOf(false) }
+
+    var isBar by remember { mutableStateOf(false) }
+    var isDiner by remember { mutableStateOf(false) }
+    var isHouse by remember { mutableStateOf(false) }
+    var isHotel3 by remember { mutableStateOf(false) }
+    var isHotel4 by remember { mutableStateOf(false) }
+    var isHotel5 by remember { mutableStateOf(false) }
+    var isAirport by remember { mutableStateOf(false) }
+    var isFactory by remember { mutableStateOf(false) }
+    var isManufacturing by remember { mutableStateOf(false) }
+
 
 
 
@@ -493,7 +518,7 @@ fun MainScreen(navController: NavController) {
               }
              Spacer(modifier = Modifier.height(4.dp))
               AnimatedVisibility(visible = isBirga,  enter = enterTransition, exit = exitTransition ) {
-                      Row(modifier = Modifier.fillMaxWidth().height(334.dp).padding(horizontal = 8.dp)
+                      Row(modifier = Modifier.fillMaxWidth().height(340.dp).padding(horizontal = 8.dp)
                       .border(1.dp, color = colorResource(R.color.blue), shape = RoundedCornerShape(8.dp)).padding(4.dp),
                           verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween){
                           Column(modifier = Modifier.fillMaxHeight().width(120.dp),
@@ -941,6 +966,292 @@ fun MainScreen(navController: NavController) {
                       }
               }
              Spacer(modifier = Modifier.height(4.dp))
+              Row(modifier = Modifier.fillMaxWidth().height(60.dp).padding(horizontal = 8.dp)
+                      .border(1.dp, color = colorResource(R.color.violet), shape = RoundedCornerShape(8.dp)).padding(4.dp),
+                          verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween){
+                  Column(modifier = Modifier.height(60.dp),
+                      horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.SpaceEvenly){
+                      ItemEmployee("Рабочий", {if(employees > 0) employees--}, {
+                          if (cash > 40) {
+                              employees++
+                              capital -= 40
+                              cash -= 40
+                              lossinmonth += 4
+                          } else {
+                              Toast.makeText(context, "У вас не хватает наличных!", Toast.LENGTH_SHORT).show()
+                          }
+                      }
+                      )
+                      CheckItem("Врач", "160", isDoctor,{
+                          if(cash > 160) {
+                              capital -= 160
+                              cash -= 160
+                              isDoctor = true
+                              lossinmonth += 16
+                          } else {
+                               Toast.makeText(context, "У вас не хватает наличных!", Toast.LENGTH_SHORT).show()
+                          }
+                      }
+                      )
+                  }
+                   Column(modifier = Modifier.height(60.dp),
+                      horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.SpaceEvenly){
+                       CheckItem("Адвокат", "344",  isLawer,{
+                           if(cash > 344) {
+                               capital -= 344
+                               cash -= 344
+                               isLawer = true
+                               lossinmonth += 34
+                           } else {
+                               Toast.makeText(context, "У вас не хватает наличных!", Toast.LENGTH_SHORT).show()
+                           }
+                       }
+                      )
+                       CheckItem("Охрана", "605", isSecurity,{
+                           if(cash > 605) {
+                               capital -= 605
+                               cash -= 605
+                               isSecurity = true
+                               lossinmonth += 60
+                           } else {
+                                Toast.makeText(context, "У вас не хватает наличных!", Toast.LENGTH_SHORT).show()
+                           }
+                       }
+                      )
+                   }
+              }
+             Spacer(modifier = Modifier.height(4.dp))
+             AnimatedVisibility(visible = isLawer, enter = enterTransition, exit = exitTransition) {
+                 LawerEmployeeActive("Подняться по служебной лестнице", {})
+             }
+             AnimatedVisibility(visible = isDoctor,  enter = enterTransition, exit = exitTransition ){
+                  Column(){
+                      LawerEmployeeActive("Экстренная госпитализация 1000", {})
+                      Spacer(modifier = Modifier.height(4.dp))
+                      LawerEmployeeActive("Консультация у врача", {})
+                  }
+
+             }
+             Spacer(modifier = Modifier.height(4.dp))
+             Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+                 verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceEvenly){
+                  Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable{
+                          isHousing = !isHousing
+                      }){
+                          Image(painter = painterResource(R.drawable.housing), contentDescription = "housing",
+                               modifier = Modifier.size(30.dp), contentScale = ContentScale.FillBounds
+                          )
+                          Spacer(modifier = Modifier.width(8.dp))
+                          Text(text = if(isHousing) "Закрыть" else "Открыть", fontSize = 14.sp, color = colorResource(R.color.blue),
+                              fontWeight = FontWeight.Bold, fontFamily = FontFamily(Font(R.font.coiny)),
+                          )
+                      }
+                  Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable{
+                          isBusiness = !isBusiness
+                      }){
+                          Image(painter = painterResource(R.drawable.business), contentDescription = "business",
+                               modifier = Modifier.size(30.dp), contentScale = ContentScale.FillBounds
+                          )
+                          Spacer(modifier = Modifier.width(8.dp))
+                          Text(text = if(isBusiness) "Закрыть" else "Открыть", fontSize = 14.sp, color = colorResource(R.color.blue),
+                              fontWeight = FontWeight.Bold, fontFamily = FontFamily(Font(R.font.coiny)),
+                          )
+                      }
+             }
+             Spacer(modifier = Modifier.height(4.dp))
+             AnimatedVisibility(visible = isHousing, enter = enterTransition, exit = exitTransition){
+                 Row(modifier = Modifier.fillMaxWidth().height(120.dp).padding(horizontal = 8.dp)
+                      .border(1.dp, color = colorResource(R.color.yellow), shape = RoundedCornerShape(8.dp)).padding(4.dp),
+                          verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween){
+                     Column(modifier = Modifier.height(120.dp).weight(1f),
+                         horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.SpaceEvenly){
+                         CheckHousing("Мотоцикл", "75", isMoto,{
+                             if(cash > 75){
+                                 capital -= 75
+                                 cash -= 75
+                                 isMoto = true
+                                 lossinmonth += 7
+                                 housing += 7
+                             } else {
+                                 Toast.makeText(context, "У вас не хватает наличных!", Toast.LENGTH_SHORT).show()
+                             }
+                         })
+                         CheckHousing("Автомобиль", "326",isAuto, {
+                              if(cash > 326){
+                                 capital -= 326
+                                 cash -= 326
+                                 isAuto = true
+                                 lossinmonth += 32
+                                  housing += 32
+                             } else {
+                                 Toast.makeText(context, "У вас не хватает наличных!", Toast.LENGTH_SHORT).show()
+                             }
+                         })
+                         CheckHousing("Квартира", "595",isApartment, {
+                              if(cash > 595){
+                                 capital -= 595
+                                 cash -= 595
+                                 isApartment = true
+                                 lossinmonth += 59
+                                  housing += 59
+                             } else {
+                                 Toast.makeText(context, "У вас не хватает наличных!", Toast.LENGTH_SHORT).show()
+                             }
+                         })
+                         CheckHousing("Вилла", "2047",isWilla, {
+                              if(cash > 2047){
+                                 capital -= 2047
+                                 cash -= 2047
+                                 isWilla = true
+                                 lossinmonth += 204
+                                  housing += 204
+                             } else {
+                                 Toast.makeText(context, "У вас не хватает наличных!", Toast.LENGTH_SHORT).show()
+                             }
+                         })
+                     }
+                      Column(modifier = Modifier.height(120.dp).weight(1f),
+                         horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.SpaceEvenly){
+                         CheckHousing("Самолет", "5145",isFly, {
+                              if(cash > 5145){
+                                 capital -= 5145
+                                 cash -= 5145
+                                 isFly = true
+                                 lossinmonth += 514
+                                  housing += 514
+                             } else {
+                                 Toast.makeText(context, "У вас не хватает наличных!", Toast.LENGTH_SHORT).show()
+                             }
+                         })
+                         CheckHousing("Дворец", "10773",isCastle, {
+                              if(cash > 10773){
+                                 capital -= 10773
+                                 cash -= 10773
+                                 isCastle = true
+                                 lossinmonth += 1077
+                                  housing += 1077
+                             } else {
+                                 Toast.makeText(context, "У вас не хватает наличных!", Toast.LENGTH_SHORT).show()
+                             }
+                         })
+                         CheckHousing("Остров", "19562",isIsland, {
+                              if(cash > 19562){
+                                 capital -= 19562
+                                 cash -= 19562
+                                 isIsland = true
+                                 lossinmonth += 1956
+                                  housing += 1956
+                             } else {
+                                 Toast.makeText(context, "У вас не хватает наличных!", Toast.LENGTH_SHORT).show()
+                             }
+                         })
+                     }
+                 }
+             }
+             Spacer(modifier = Modifier.height(4.dp))
+             AnimatedVisibility(visible = isBusiness, enter = enterTransition, exit = exitTransition){
+                 Row(modifier = Modifier.fillMaxWidth().height(150.dp).padding(horizontal = 8.dp)
+                      .border(1.dp, color = colorResource(R.color.yellow), shape = RoundedCornerShape(8.dp)).padding(4.dp),
+                          verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween){
+                     Column(modifier = Modifier.height(150.dp).weight(1f),
+                         horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.SpaceEvenly){
+                         CheckHousing("Бар", "1047", isBar,{
+                             if(cash > 1047){
+                                 capital -= 1047
+                                 cash -= 1047
+                                 isBar = true
+                                 lossinmonth += 104
+                             } else {
+                                 Toast.makeText(context, "У вас не хватает наличных!", Toast.LENGTH_SHORT).show()
+                             }
+                         })
+                         CheckHousing("Забегаловка", "2199", isDiner,{
+                             if(cash > 2199){
+                                 capital -= 2199
+                                 cash -= 2199
+                                 isDiner = true
+                                 lossinmonth += 219
+                             } else {
+                                 Toast.makeText(context, "У вас не хватает наличных!", Toast.LENGTH_SHORT).show()
+                             }
+                         })
+                         CheckHousing("Дом", "4129", isHouse,{
+                             if(cash > 4129){
+                                 capital -= 4129
+                                 cash -= 4129
+                                 isHouse = true
+                                 lossinmonth += 412
+                             } else {
+                                 Toast.makeText(context, "У вас не хватает наличных!", Toast.LENGTH_SHORT).show()
+                             }
+                         })
+                         CheckHousing("Отель ***", "11804", isHotel3,{
+                             if(cash > 11804){
+                                 capital -= 11804
+                                 cash -= 11804
+                                 isHotel3 = true
+                                 lossinmonth += 1180
+                             } else {
+                                 Toast.makeText(context, "У вас не хватает наличных!", Toast.LENGTH_SHORT).show()
+                             }
+                         })
+                         CheckHousing("Отель ****", "36524", isHotel4,{
+                             if(cash > 36524){
+                                 capital -= 36524
+                                 cash -= 36524
+                                 isHotel4 = true
+                                 lossinmonth += 3652
+                             } else {
+                                 Toast.makeText(context, "У вас не хватает наличных!", Toast.LENGTH_SHORT).show()
+                             }
+                         })
+                     }
+                     Column(modifier = Modifier.height(150.dp).weight(1f),
+                         horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.SpaceEvenly){
+                         CheckHousing("Отель *****", "55115", isHotel5,{
+                             if(cash > 55115){
+                                 capital -= 55115
+                                 cash -= 55115
+                                 isHotel5 = true
+                                 lossinmonth += 5511
+                             } else {
+                                 Toast.makeText(context, "У вас не хватает наличных!", Toast.LENGTH_SHORT).show()
+                             }
+                         })
+                         CheckHousing("Аэропорт", "87111", isAirport,{
+                             if(cash > 87111){
+                                 capital -= 87111
+                                 cash -= 87111
+                                 isAirport = true
+                                 lossinmonth += 8711
+                             } else {
+                                 Toast.makeText(context, "У вас не хватает наличных!", Toast.LENGTH_SHORT).show()
+                             }
+                         })
+                         CheckHousing("Фабрика", "118167", isFactory,{
+                             if(cash > 118167){
+                                 capital -= 118167
+                                 cash -= 118167
+                                 isFactory = true
+                                 lossinmonth += 11816
+                             } else {
+                                 Toast.makeText(context, "У вас не хватает наличных!", Toast.LENGTH_SHORT).show()
+                             }
+                         })
+                         CheckHousing("Завод", "254639", isManufacturing,{
+                             if(cash > 254639){
+                                 capital -= 254639
+                                 cash -= 254639
+                                 isManufacturing = true
+                                 lossinmonth += 25463
+                             } else {
+                                 Toast.makeText(context, "У вас не хватает наличных!", Toast.LENGTH_SHORT).show()
+                             }
+                         })
+                     }
+                 }
+             }
+             Spacer(modifier = Modifier.height(4.dp))
          }
      }
 }
@@ -1144,3 +1455,140 @@ fun CoinsPercents(coinspercents : Int, coins: Int){
     fontWeight = FontWeight.Bold
     )
 }
+@Composable
+fun CheckItem(text: String, coast: String, isOk: Boolean, onPlus: () -> Unit){
+    val scope = rememberCoroutineScope()
+    var isPlus by remember { mutableStateOf(false) }
+    val colorplus = Brush.verticalGradient(listOf(colorResource(R.color.white), colorResource(R.color.green)))
+    Row(verticalAlignment = Alignment.CenterVertically){
+        Image(painter = painterResource(if(isOk) R.drawable.checkok else R.drawable.checkempty), contentDescription = "checks",
+            modifier = Modifier.size(24.dp), contentScale = ContentScale.FillBounds
+        )
+        Spacer(modifier = Modifier.width(2.dp))
+        Card(modifier = Modifier.width(100.dp).height(20.dp).clickable{
+             scope.launch {
+                    isPlus = true
+                    delay(150)
+                    isPlus = false
+                }
+            onPlus()
+        }, elevation = 2.dp, border = BorderStroke(1.dp, colorResource(R.color.gray))){
+            Box(modifier = Modifier.fillMaxSize().background(if(isPlus) colorplus else
+                Brush.verticalGradient(listOf(colorResource(R.color.white), colorResource(R.color.white)))),
+                contentAlignment = Alignment.Center){
+                 Text(text = text, fontSize = 14.sp, color = colorResource(R.color.green),
+                          fontFamily = FontFamily(Font(R.font.coiny)),
+                     )
+            }
+        }
+        Spacer(modifier = Modifier.width(4.dp))
+        Text(text = coast, fontSize = 12.sp, color = colorResource(R.color.green),
+            fontFamily = FontFamily(Font(R.font.coiny)),
+        )
+    }
+}
+@Composable
+fun ItemEmployee(summa: String, onMinus: () -> Unit, onPlus: () -> Unit){
+    val scope = rememberCoroutineScope()
+    var isMinus by remember { mutableStateOf(false) }
+    var isPlus by remember { mutableStateOf(false) }
+    val colorminus = Brush.verticalGradient(listOf(colorResource(R.color.white), colorResource(R.color.red)))
+    val colorplus = Brush.verticalGradient(listOf(colorResource(R.color.white), colorResource(R.color.green)))
+    Row(verticalAlignment = Alignment.CenterVertically){
+        Spacer(modifier = Modifier.width(2.dp))
+        Card(modifier = Modifier.size(20.dp).clickable{
+                scope.launch {
+                    isMinus = true
+                    delay(150)
+                    isMinus = false
+                }
+            onMinus()
+        }, elevation = 2.dp, border = BorderStroke(1.dp, colorResource(R.color.gray)) ){
+            Box(modifier = Modifier.fillMaxSize().background(if(isMinus) colorminus else
+                Brush.verticalGradient(listOf(colorResource(R.color.white), colorResource(R.color.white)))),
+                contentAlignment = Alignment.Center){
+                 Text(text = "-", fontSize = 16.sp, color = colorResource(R.color.green),
+                          fontFamily = FontFamily(Font(R.font.coiny)),
+                     )
+            }
+        }
+        Spacer(modifier = Modifier.width(4.dp))
+        Card(modifier = Modifier.width(100.dp).height(20.dp).clickable{
+             scope.launch {
+                    isPlus = true
+                    delay(150)
+                    isPlus = false
+                }
+            onPlus()
+        }, elevation = 2.dp, border = BorderStroke(1.dp, colorResource(R.color.gray))){
+            Box(modifier = Modifier.fillMaxSize().background(if(isPlus) colorplus else
+                Brush.verticalGradient(listOf(colorResource(R.color.white), colorResource(R.color.white)))),
+                contentAlignment = Alignment.Center){
+                 Text(text = summa, fontSize = 14.sp, color = colorResource(R.color.green),
+                          fontFamily = FontFamily(Font(R.font.coiny)),
+                     )
+            }
+        }
+        Spacer(modifier = Modifier.width(4.dp))
+         Text(text = "40", fontSize = 13.sp, color = colorResource(R.color.green),
+            fontFamily = FontFamily(Font(R.font.coiny)),
+        )
+    }
+}
+@Composable
+fun LawerEmployeeActive(text: String, onActive: () -> Unit){
+    val scope = rememberCoroutineScope()
+    var isPlus by remember { mutableStateOf(false) }
+    val colorplus = Brush.verticalGradient(listOf(colorResource(R.color.white), colorResource(R.color.green)))
+    Row(verticalAlignment = Alignment.CenterVertically){
+        Card(modifier = Modifier.fillMaxWidth().height(30.dp).padding(horizontal = 8.dp).clickable{
+             scope.launch {
+                    isPlus = true
+                    delay(150)
+                    isPlus = false
+                }
+            onActive()
+        }, elevation = 2.dp, border = BorderStroke(1.dp, colorResource(R.color.violet))){
+            Box(modifier = Modifier.fillMaxSize().background(if(isPlus) colorplus else
+                Brush.verticalGradient(listOf(colorResource(R.color.white), colorResource(R.color.white)))),
+                contentAlignment = Alignment.Center){
+                 Text(text = text, fontSize = 16.sp, color = colorResource(R.color.green),
+                          fontFamily = FontFamily(Font(R.font.coiny)),
+                     )
+            }
+        }
+    }
+}
+@Composable
+fun CheckHousing(text: String, coast: String, isOk: Boolean, onPlus: () -> Unit){
+    val scope = rememberCoroutineScope()
+    var isPlus by remember { mutableStateOf(false) }
+    val colorplus = Brush.verticalGradient(listOf(colorResource(R.color.white), colorResource(R.color.green)))
+    Row(verticalAlignment = Alignment.CenterVertically){
+        Image(painter = painterResource(if(isOk) R.drawable.checkok else R.drawable.checkempty), contentDescription = "checks",
+            modifier = Modifier.size(24.dp), contentScale = ContentScale.FillBounds
+        )
+        Spacer(modifier = Modifier.width(2.dp))
+        Card(modifier = Modifier.width(90.dp).height(20.dp).clickable{
+             scope.launch {
+                    isPlus = true
+                    delay(150)
+                    isPlus = false
+                }
+            onPlus()
+        }, elevation = 2.dp, border = BorderStroke(1.dp, colorResource(R.color.gray))){
+            Box(modifier = Modifier.fillMaxSize().background(if(isPlus) colorplus else
+                Brush.verticalGradient(listOf(colorResource(R.color.white), colorResource(R.color.white)))),
+                contentAlignment = Alignment.Center){
+                 Text(text = text, fontSize = 14.sp, color = colorResource(R.color.green),
+                          fontFamily = FontFamily(Font(R.font.coiny)),
+                     )
+            }
+        }
+         Spacer(modifier = Modifier.width(4.dp))
+        Text(text = coast, fontSize = 12.sp, color = colorResource(R.color.green),
+            fontFamily = FontFamily(Font(R.font.coiny)),
+        )
+    }
+}
+
